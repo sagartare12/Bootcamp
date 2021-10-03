@@ -4,6 +4,13 @@ dotenv.config({path: './config.env'});
 const app = require(`${__dirname}/app`);
 
 
+
+process.on('uncaughtException',err=>{
+    console.log(err.name,err.message);
+    process.exit(1);
+}) 
+
+
 const DB = process.env.DATABASE.replace('<PASSWORD>',
 process.env.DATABASE_PASSWORD);
 
@@ -33,9 +40,19 @@ mongoose.connect(DB, {
 // console.log(process.env);
 const port = process.env.PORT || 8000;
 
-app.listen(port, ()=>{
+const server = app.listen(port, ()=>{
     console.log(`App runing on port: ${port}`);
 })
+
+process.on('unhandledRejection',err=>{
+    console.log(err.name , err.message);
+    console.log('Unhandle rejection , server getting down....!')
+    server.close(()=>{
+        process.exit(1);
+    })
+});
+
+
 
 
 //dblinkCompass : mongodb+srv://sagar:<password>@cluster0.kifla.mongodb.net/test

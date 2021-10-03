@@ -21,6 +21,7 @@ app.use((req , res , next )=>{
 
 app.use((req , res , next ) =>{
     req.requestTime = new Date().toISOString();
+   
     next();
 })
 
@@ -40,8 +41,8 @@ app.all('*',(req,res,next)=>{
     // error.status = 'Fail';
     // error.statusCode = 404;
     // next(error);
-
-    next(new AppError(`Cant't find ${req.originalUrl} on this server`));
+const message = `Cant't find ${req.originalUrl} on this server`;
+    next (new AppError(message,400));
 })
 
 app.use(globalErrorHandler);

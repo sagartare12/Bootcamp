@@ -3,7 +3,7 @@ const express = require('express')
 
 
 const tourController = require(`${__dirname}/../controllers/tourController`)
-
+const authController = require('./../controllers/authController')
 const router = express.Router();
 
 // router
@@ -21,7 +21,7 @@ router
 
 router
     .route('/')
-    .get(tourController.tours)
+    .get(authController.protect, tourController.tours)
     .post(tourController.createTour)
 
 router

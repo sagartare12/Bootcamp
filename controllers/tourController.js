@@ -148,7 +148,7 @@ exports.tour = catchAsync(async (req, res,next)=>{
     // const tour = tourss.find(el=>el.id === id);
     
 
-    
+  
     const tour = await Tour.findById(req.params.id)
     // const tour = await Tour.findOne({ _id:req.params.id});
 
@@ -156,7 +156,7 @@ exports.tour = catchAsync(async (req, res,next)=>{
 
     //Facing issue
     if (!tour) {
-    return next(new AppError(`No tour found with that ID`));
+    return next(new AppError('Cant find  on  server',404));
   }
     res
     .status(200)
