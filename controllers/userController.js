@@ -15,12 +15,21 @@ exports.getAllUsers = catchAsync(async(req,res,next)=>{
     })
     next();
 })
-exports.getUsers = (req ,res)=>{
-    res.status(401).json({
-        status: 'error',
-        message: 'this route is not defined yet'
+exports.getUser = catchAsync(async(req ,res,next)=>{
+
+    const user = await User.findById(req.params.id)
+
+    if(!user){
+        return next (new AppError('User not found',404))
+    }
+    res.status(200).json({
+        status: 'Success',
+        data : {
+            user
+        }
     })
-}
+    next();
+})
 
 exports.createUsers = (req , res)=>{
       res.status(401).json({
@@ -28,9 +37,9 @@ exports.createUsers = (req , res)=>{
         message: 'this route is not defined yet'
     })
 }
-exports.getUser = (req , res)=>{
-      res.status(401).json({
-        status: 'error',
-        message: 'this route is not defined yet2'
-    })
-}
+// exports.getUser = (req , res)=>{
+//       res.status(401).json({
+//         status: 'error',
+//         message: 'this route is not defined yet2'
+//     })
+// }

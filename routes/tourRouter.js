@@ -28,6 +28,6 @@ router
     .route('/:id')
     .get(tourController.tour)
     .patch(tourController.updateTour)
-    .delete(tourController.deleteTour);
+    .delete(authController.protect,authController.restrictTo('admin','co-lead'),tourController.deleteTour);
 
     module.exports = router;
