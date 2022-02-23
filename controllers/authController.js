@@ -199,8 +199,8 @@ exports.updatePassword = catchAsync(async (req ,res, next)=>{
  }
 
  //3) Update password
- userPassword = req.body.password;
- userPasswordConfirm= req.body.passwordConfirm;
+ password = req.body.password;
+  passwordConfirm = req.body.passwordConfirm;
 await user.save();
  //4)log user in send jwt
  createSendToken(user,200,res);
