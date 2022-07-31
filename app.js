@@ -7,6 +7,11 @@ const helmet = require('helmet')
 const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
+const cookieParser = require('cookie-parser');
+var cors = require('cors');
+
+
+
 
 const AppError = require('./alias/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -16,6 +21,11 @@ const hmiRouter = require(`${__dirname}/routes/hmiRouter`);
 const reviewRouter = require(`${__dirname}/routes/reviewRouter`);
 const viewRouter = require(`${__dirname}/routes/viewRouter`);
 
+
+
+
+
+
 app.set('view engine' , 'pug');
 app.set('views',path.join(__dirname,'views'));
 // global middleware
@@ -23,11 +33,13 @@ app.set('views',path.join(__dirname,'views'));
 
 app.use(express.static(path.join(__dirname,'/public')))
 // set security http header only
-app.use(helmet())
+app.use(helmet()) 
+
 
 
 //body parser reading data from body into req.body
 app.use(express.json({ limit : '10kb'}));
+app.use(cookieParser());
 
 
 //logging environment
@@ -52,6 +64,7 @@ const limiter = rateLimit({
 app.use('/api',limiter)
 
 
+
 //Data sanitization against noSql query injection
 app.use(mongoSanitize());
 
@@ -73,6 +86,14 @@ app.use((req , res , next ) =>{
     next();
 })
 
+
+// content security policy 
+app.use((req, res, next) =>{ 
+    res.setHeader( 'Content-Security-Policy', "script-src 'self' https://cdnjs.cloudflare.com" ); 
+    next(); 
+  })
+
+  app.use(cors());
 
 //routes
 

@@ -4,9 +4,11 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="Content-Security-Policy" content="default-src * self blob: data: gap:; style-src * self 'unsafe-inline' blob: data: gap:; script-src * 'self' 'unsafe-eval' 'unsafe-inline' blob: data: gap:; object-src * 'self' blob: data: gap:; img-src * self 'unsafe-inline' blob: data: gap:; connect-src self * 'unsafe-inline' blob: data: gap:; frame-src * self blob: data: gap:;")
         link(rel='stylesheet', href='/css/style.css')
         link(rel='shortcut icon', href='/img/favicon.png', type='img/png')
         link(href='https://fonts.googleapis.com/css?family=Lato:300,300i,700' rel='stylesheet')
+       
         title Natours | #{title}
     body 
         //-HEADER
@@ -20,5 +22,12 @@ html(lang="en")
 
         //-FOOTER
         include _footer
-       
-        
+    
+   
+        //- script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js')
+        //- script(src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js')
+        //- Content-Security-Policy: script-src-elem <source>;
+        //- Content-Security-Policy: script-src-elem <source> <source>;
+
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js')
+        script(src='/js/login.js')

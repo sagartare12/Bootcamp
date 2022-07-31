@@ -18,7 +18,7 @@ exports.getOverview = catchAsync(async(req, res , next) => {
 }
 );
 
-exports.getTour =catchAsync(async(req, res) => {
+exports.getTour =catchAsync(async(req, res , next) => {
   // 1) get the data for requested route
   const tour = await Tour.findOne({slug:req.params.slug}).populate({
     path: 'reviews',
@@ -32,3 +32,23 @@ exports.getTour =catchAsync(async(req, res) => {
     tour
   });
 })
+
+
+
+exports.logIn = catchAsync(async(req, res , next) => {
+
+  res.status(200).render('login', {
+    title: 'Log in form',
+    
+  });
+}
+);
+
+exports.test = catchAsync(async(req,res,next)=>{
+  res.cookie('name', 'express')
+  res.status(200).render('t',{
+    title:'test'
+  })
+})
+
+

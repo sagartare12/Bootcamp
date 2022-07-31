@@ -10,6 +10,7 @@ process.on('uncaughtException',err=>{
     process.exit(1);
 }) 
 
+
 const database = `mongodb+srv://sagar:<PASSWORD>@cluster0.kifla.mongodb.net/natours?retryWrites=true&w=majority`;
 const DB = database.replace('<PASSWORD>',
 process.env.DATABASE_PASSWORD);
