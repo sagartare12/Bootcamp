@@ -45,7 +45,7 @@ exports.logIn = catchAsync(async(req, res , next) => {
 );
 
 exports.test = catchAsync(async(req,res,next)=>{
-  res.cookie('name', 'express')
+  res.cookie('name sagar', 'express')
   res.status(200).render('t',{
     title:'test'
   })
