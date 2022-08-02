@@ -7,7 +7,7 @@ const helmet = require('helmet')
 const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
-const cookieParser = require('cookie-parser');
+
 var cors = require('cors');
 
 
@@ -39,7 +39,6 @@ app.use(helmet())
 
 //body parser reading data from body into req.body
 app.use(express.json({ limit : '10kb'}));
-app.use(cookieParser());
 
 
 //logging environment
@@ -92,6 +91,8 @@ app.use((req, res, next) =>{
     res.setHeader( 'Content-Security-Policy', "script-src 'self' https://cdnjs.cloudflare.com" ); 
     next(); 
   })
+
+
 
   app.use(cors());
 
