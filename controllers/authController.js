@@ -92,6 +92,8 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  }else if(req.cookies){
+    token = req.cookies.jwt;
   }
   console.log(token)
   // 2) Check if user not log in
@@ -124,6 +126,41 @@ console.log(decode);
  req.user = freshUser;
   next();
 })
+
+
+
+
+// Only for rendered pages, no errors!
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+ 
+ 
+
+  // 2) Check if user not log in
+  if (req.cookies.jwt) {
+    try{
+        const decode = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET)
+        // 3) Check that the user still exist
+        const currentUser =  await User.findById(decode.id);
+        if(!currentUser){
+          return next ()
+        }
+        
+        // 4) If user change the password
+        if(currentUser.changedPasswordAfter(decode.iat)){
+        return next();
+        }
+    // there is logged in user
+        res.locals.user = currentUser;
+        return next();
+      }catch(err){
+        return next();
+      }}
+      next();
+  }
+)
+
+
+
 
 exports.restrictTo=(...roles)=>{
   //roles[user,admin,co-lead] 

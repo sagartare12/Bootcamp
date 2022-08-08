@@ -2,6 +2,9 @@ const express = require('express')
 
 const router = express.Router();
 const viewController = require(`${__dirname}/../controllers/viewController`);
+const authController = require(`${__dirname}/../controllers/authController`)
+
+router.use(authController.isLoggedIn)
 
 router.get('/', viewController.getOverview);
 

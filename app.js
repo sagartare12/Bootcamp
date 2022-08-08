@@ -7,8 +7,8 @@ const helmet = require('helmet')
 const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
-
-var cors = require('cors');
+const cookieParser = require('cookie-parser')
+const cors = require('cors');
 
 
 
@@ -39,7 +39,7 @@ app.use(helmet())
 
 //body parser reading data from body into req.body
 app.use(express.json({ limit : '10kb'}));
-
+app.use(cookieParser())
 
 //logging environment
 console.log(process.env.NODE_ENV)
@@ -81,7 +81,7 @@ app.use(
 
 app.use((req , res , next ) =>{
     req.requestTime = new Date().toISOString();
-   
+    console.log(req.cookies);
     next();
 })
 
