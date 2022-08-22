@@ -136,6 +136,7 @@ console.log(decode);
 
  //GRANT ACCESS TO LOGGED IN USER
  req.user = freshUser;
+ res.locals.user = freshUser;
   next();
 })
 
